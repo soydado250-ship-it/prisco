@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prisco — classified friendship file</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+:root{--navy:#071426;--blue:#123b68;--ice:#a9d9ff;--burgundy:#751e3c;--wine:#a83258;--ink:#030812;--paper:#eaf3ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--paper);font-family:'Cairo',sans-serif;background:radial-gradient(ellipse at 15% 15%,#173b66 0,transparent 38%),radial-gradient(ellipse at 85% 75%,#50172f 0,transparent 35%),#030812;overflow-x:hidden}
+button{font:inherit;cursor:pointer}
+.screen{display:none;min-height:100vh;position:relative;padding:28px 18px 70px;overflow:hidden}
+.screen.active{display:block;animation:appear .65s ease both}
+@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.stars,.stars:before,.stars:after{position:fixed;inset:0;pointer-events:none;content:"";background-image:radial-gradient(1px 1px at 8% 17%,#fff 98%,transparent),radial-gradient(1.5px 1.5px at 27% 62%,#c5e7ff 98%,transparent),radial-gradient(1px 1px at 77% 22%,#fff 98%,transparent),radial-gradient(2px 2px at 89% 81%,#fff 98%,transparent),radial-gradient(1px 1px at 53% 38%,#fff 98%,transparent);background-size:240px 210px;opacity:.55;z-index:0}
+.stars:before{transform:translate(70px,40px);opacity:.55}.stars:after{transform:translate(-40px,100px);opacity:.35}
+.content{position:relative;z-index:2;max-width:1000px;margin:auto}
+.eyebrow{font:600 12px 'Space Grotesk',sans-serif;letter-spacing:3px;color:var(--ice);text-transform:uppercase}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(36px,7vw,76px);line-height:1.12;margin:15px 0}
+h2{font-size:clamp(27px,4vw,43px);margin-bottom:10px}
+.en{font-family:'Space Grotesk',sans-serif;direction:ltr;display:inline-block}
+.muted{color:#a8bad0}
+.hero{min-height:calc(100vh - 95px);display:flex;align-items:center;justify-content:center;text-align:center}
+.hero-card{max-width:760px;padding:clamp(24px,5vw,55px);border:1px solid #6c8eae66;border-radius:28px;background:linear-gradient(145deg,#0c2038dc,#070d1bdc);box-shadow:0 25px 90px #0008,inset 0 0 40px #5caeff0b;backdrop-filter:blur(9px)}
+.spider-mark{font-size:46px;filter:drop-shadow(0 0 15px #d42c5b);margin-bottom:8px}
+.danger{margin:28px auto 12px;width:min(280px,75vw);aspect-ratio:1;border-radius:50%;border:7px solid #ff8a9e;background:radial-gradient(circle at 35% 25%,#ff566d,#9c082e 60%,#4d071c);color:white;font-size:clamp(26px,5vw,38px);font-weight:900;box-shadow:0 0 0 10px #9b173b30,0 0 55px #e21c55aa,inset 0 -12px 20px #430018;transition:.2s;animation:pulse 2.3s infinite}
+.danger:hover{transform:scale(1.05) rotate(-2deg)}
+@keyframes pulse{50%{box-shadow:0 0 0 18px #9b173b18,0 0 75px #e21c55cc,inset 0 -12px 20px #430018}}
+.small-note{font-size:13px;color:#9fb3cb}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:30px}
+.tag{border:1px solid #6b91b6;border-radius:999px;padding:6px 13px;color:#c4e3ff;font:12px 'Space Grotesk'}
+.intro{text-align:center;margin:30px auto 38px;max-width:760px}
+.intro p{color:#c0cfe0;font-size:17px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:17px;margin:28px 0}
+.tile{position:relative;text-align:right;min-height:170px;padding:20px;border:1px solid #54799d88;border-radius:19px;background:linear-gradient(145deg,#102b49e8,#0a1426ed);color:var(--paper);overflow:hidden;transition:.25s}
+.tile:hover{transform:translateY(-5px);border-color:#b3dfff;box-shadow:0 12px 35px #0006}
+.tile .ico{font-size:28px}.tile h3{margin:8px 0 4px;font-size:20px}.tile p{font-size:13px;color:#a9bfd5;margin:0}
+.tile .arrow{position:absolute;left:17px;bottom:14px;color:#f19ab5;font-size:23px}
+.panel{padding:clamp(20px,4vw,36px);border:1px solid #6788aa77;border-radius:23px;background:linear-gradient(145deg,#0d2038ed,#080f1eeF);box-shadow:0 20px 60px #0005;margin:22px 0}
+.panel p{line-height:2;font-size:16px;color:#e0eaf6}
+.panel .english{direction:ltr;text-align:left;font-family:'Space Grotesk',sans-serif;line-height:1.9;color:#c3dcf5}
+.back,.action{border:1px solid #7899ba;border-radius:999px;padding:10px 18px;background:#102b49;color:#e8f5ff}
+.back:hover,.action:hover{background:#1b4774}
+.section-title{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.section-title span{font-size:25px}
+.wheel-wrap{display:grid;grid-template-columns:minmax(220px,330px) 1fr;gap:28px;align-items:center}
+.wheel{width:min(290px,75vw);aspect-ratio:1;border-radius:50%;margin:auto;border:8px solid #a9d9ff;position:relative;overflow:hidden;background:conic-gradient(#163e68 0 45deg,#75213f 45deg 90deg,#0d2745 90deg 135deg,#9a3154 135deg 180deg,#163e68 180deg 225deg,#75213f 225deg 270deg,#0d2745 270deg 315deg,#9a3154 315deg);box-shadow:0 0 40px #54aaff55;transition:transform 3s cubic-bezier(.12,.75,.12,1)}
+.wheel:before{content:"PRISCO";position:absolute;inset:36%;border-radius:50%;background:#06101f;border:3px solid #b4dfff;display:grid;place-items:center;font:700 15px 'Space Grotesk';color:white;z-index:2}
+.wheel-label{position:absolute;left:50%;top:8%;transform:translateX(-50%);font-size:19px}
+.pointer{font-size:35px;text-align:center;color:#ff9db8;line-height:1}
+.wheel-side{text-align:center}.wheel-side p{color:#b8c9dc;line-height:1.8}
+.result{min-height:65px;margin:15px 0;padding:13px;border:1px dashed #8fb8df;border-radius:14px;color:#ffe1eb;font-weight:700}
+.chess-board{width:min(440px,90vw);aspect-ratio:1;display:grid;grid-template-columns:repeat(8,1fr);border:7px solid #a9d9ff;border-radius:8px;overflow:hidden;box-shadow:0 0 35px #0008;margin:18px auto}
+.square{border:0;border-radius:0;display:grid;place-items:center;font-size:clamp(24px,5vw,43px);padding:0;line-height:1}
+.light{background:#d8e6ed;color:#0b1b2e}.dark{background:#234769;color:#f4f7ff}
+.square.selected{outline:4px solid #f3a1ba;outline-offset:-4px;background:#9a3154}
+.square.hint{box-shadow:inset 0 0 0 5px #f7c76a}
+.chess-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
+.notice{font-size:13px;color:#9fb5cc}
+.final-screen{position:fixed;inset:0;background:#020713f5;z-index:20;display:none;align-items:center;justify-content:center;padding:20px;text-align:center}
+.final-screen.show{display:flex;animation:scareFlash .42s steps(2,end)}
+@keyframes scareFlash{0%{opacity:0;filter:brightness(3)}18%{opacity:1;filter:brightness(1)}35%{opacity:.72}55%{opacity:1}100%{opacity:1}}
+.mouse-jump{font-size:clamp(150px,34vw,290px);line-height:1;filter:drop-shadow(0 0 28px #f5d5e5);animation:jumpScare .52s cubic-bezier(.12,.9,.22,1.25)}
+@keyframes jumpScare{0%{transform:translateY(110vh) scale(.12) rotate(-18deg)}62%{transform:translateY(-12px) scale(1.48) rotate(8deg)}78%{transform:translateY(4px) scale(1.12) rotate(-4deg)}100%{transform:translateY(0) scale(1.22) rotate(0)}}
+.final-screen.show>div{animation:screenShake .38s .05s both}
+@keyframes screenShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-12px)}40%{transform:translateX(11px)}60%{transform:translateX(-7px)}80%{transform:translateX(5px)}}
+.spider{position:fixed;top:0;padding-top:105px;z-index:4;pointer-events:none;font-size:24px;line-height:24px;filter:drop-shadow(0 0 7px #d9efff)}
+.spider:after{content:"";position:absolute;width:2px;height:105px;background:linear-gradient(#c8e8ff,#8bbce8);left:50%;top:0;z-index:-1;box-shadow:0 0 5px #a9d9ff88}
+.spider.s1{left:8%;top:0;padding-top:105px}.spider.s2{left:84%;top:0;padding-top:145px}.spider.s3{left:60%;top:0;padding-top:85px}
+.spider.s1:after{height:105px}.spider.s2:after{height:145px}.spider.s3:after{height:85px}
+@keyframes drop{0%,100%{transform:translateY(0)}}
+.running-mouse{position:fixed;bottom:12px;left:-70px;z-index:8;font-size:30px;animation:run 16s linear infinite;filter:drop-shadow(0 0 8px #fff)}
+@keyframes run{to{left:110vw}}
+.constellation{position:absolute;right:-55px;top:20%;font-size:90px;opacity:.09;transform:rotate(-20deg)}
+.footer{text-align:center;color:#718aa5;font:11px 'Space Grotesk';margin-top:35px;direction:ltr}
+.hud{position:fixed;top:12px;right:12px;z-index:12;display:flex;align-items:center;gap:9px}
+.hud-btn{border:1px solid #7194b6;border-radius:999px;padding:7px 12px;background:#08172bdc;color:#dceeff;font-size:12px}
+.hud-label{font:10px 'Space Grotesk';letter-spacing:1px;color:#a9d9ff;background:#08172bdc;border:1px solid #45698b;border-radius:999px;padding:8px 10px}
+.hud-label b{color:#9ff0c4}
+.toast{position:fixed;left:50%;bottom:58px;transform:translate(-50%,20px);z-index:30;background:#0b1d32;border:1px solid #a9d9ff;color:#eff8ff;padding:12px 18px;border-radius:14px;box-shadow:0 10px 35px #0009;opacity:0;pointer-events:none;transition:.25s;text-align:center;width:max-content;max-width:90vw}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.spider{cursor:pointer}
+@media(max-width:680px){.wheel-wrap,.chess-layout{grid-template-columns:1fr}.topline{justify-content:center}.panel p{font-size:15px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+
+.secret-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px;margin:20px 0}
+.secret-card{border:1px solid #54799d88;border-radius:18px;padding:18px;background:linear-gradient(145deg,#102b49e8,#0a1426ed)}
+.secret-card h3{margin:0 0 8px;font-size:19px}.secret-card p{color:#b7c9dc;line-height:1.8;font-size:14px}
+.secret-card input{width:100%;border:1px solid #7599bb;border-radius:10px;background:#061326;color:#fff;padding:11px;margin:7px 0;font:16px 'Space Grotesk'}
+.secret-output{padding:10px;border:1px dashed #769bbd;border-radius:10px;min-height:42px;color:#ffe1eb;margin-top:8px}
+.web-threads,.planet-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:15px 0}
+.thread-btn{border:1px solid #8bbce8;background:#102b49;color:#fff;border-radius:14px;padding:15px 22px;font-size:20px}
+.book-page{min-height:130px;padding:20px;border:1px solid #b9d9f3;border-radius:8px 22px 22px 8px;background:linear-gradient(120deg,#e9f2fb,#b9cee1);color:#10223a;display:grid;place-items:center;text-align:center;font-size:18px;line-height:2}
+.planet{width:76px;height:76px;border-radius:50%;border:2px solid #b9dfff;color:white;font-size:29px;background:radial-gradient(circle at 30% 25%,#8acbff,#173b68 65%,#071426);box-shadow:0 0 18px #64b9ff55}
+.planet:nth-child(2){background:radial-gradient(circle at 30% 25%,#ffb0c7,#75213f 70%,#210b1a)}.planet:nth-child(3){background:radial-gradient(circle at 30% 25%,#d6c5ff,#49356e 70%,#110d20)}.planet:nth-child(4){background:radial-gradient(circle at 30% 25%,#a8f0d0,#17604c 70%,#071c18)}
+.star-hunt{position:relative;min-height:220px;border:1px solid #54799d;border-radius:16px;background:radial-gradient(ellipse,#122d4d,#050c19);overflow:hidden}
+.hunt-star{position:absolute;border:0;background:transparent;font-size:30px;filter:drop-shadow(0 0 10px #ffe58a);transition:.2s}.hunt-star:hover{transform:scale(1.3)}
+@media(max-width:600px){.secret-grid{grid-template-columns:1fr}.book-page{font-size:16px}}
+
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="spider s1">🕷️</div><div class="spider s2">🕷️</div><div class="spider s3">🕷️</div>
+<div class="running-mouse" aria-hidden="true">🐭</div>
+<div class="hud">
+ <button class="hud-btn" id="soundToggle" onclick="toggleSound()" aria-label="Toggle sound">🔇 الصوت</button>
+ <span class="hud-label">SPIDER SENSE: <b>ACTIVE</b></span>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<main id="screen1" class="screen active">
+ <div class="content hero">
+  <div class="hero-card">
+   <div class="spider-mark">🕷️</div>
+   <div class="eyebrow">A VERY IMPORTANT MESSAGE · TOP SECRET</div>
+   <h1>Hey, <span class="en" style="color:#f18aa9">Prisco</span>.</h1>
+   <p style="font-size:18px;color:#c5d8ec">فيه حاجة مستنياك… بس لازم تتحلى بالشجاعة الأول.</p>
+   <button class="danger" onclick="go('screen2')">خطر الموت</button>
+   <div class="small-note">⚠️ الضغط على الزر مسؤوليتك الشخصية تمامًا.</div>
+   <p class="eyebrow" style="margin-top:25px">PROJECT: PRISCO / FILE NO. 08</p>
+  </div>
+ </div>
+</main>
+
+<main id="screen2" class="screen">
+ <div class="content">
+  <div class="topline"><span class="tag">🕸️ FRIENDSHIP ARCHIVE</span><button class="back" onclick="go('screen1')">← رجوع</button></div>
+  <div class="intro">
+   <div class="eyebrow">CONGRATULATIONS, CHAMPION</div>
+   <div class="achievement">🏅 Achievements unlocked: <span class="badge-count" id="badgeCount">0 / 7</span></div>
+   <h1>برافووووو يا <span class="en" style="color:#f18aa9">Prisco</span>! 🏆</h1>
+   <p>المهمة اتنفذت بنجاح… والملف ده اتفتح مخصوص علشانك.</p>
+  </div>
+  <div class="tiles">
+   <button class="tile" onclick="openLetter('win')"><span class="ico">🏆</span><h3>رسالة الفوز</h3><p>For the one who made it happen.</p><span class="arrow">↙</span></button>
+   <button class="tile" onclick="openLetter('thanks')"><span class="ico">📚</span><h3>حاجة كان لازم أقولها</h3><p>A little appreciation note.</p><span class="arrow">↙</span></button>
+   <button class="tile" onclick="go('wheelScreen')"><span class="ico">🎡</span><h3>عجلة التحديات</h3><p>Let's see what fate picked for you.</p><span class="arrow">↙</span></button>
+   <button class="tile" onclick="go('chessScreen')"><span class="ico">♟️</span><h3>آخر نقلة</h3><p>One move. One checkmate. No pressure.</p><span class="arrow">↙</span></button>
+   <button class="tile" onclick="secretFile()"><span class="ico">🗝️</span><h3>ملف سري</h3><p>Not everything is written in the stars.</p><span class="arrow">↙</span></button>
+   <button class="tile" onclick="go('secretLab')"><span class="ico">🌌</span><h3>مختبر الأسرار</h3><p>Seven hidden missions. One legendary friend.</p><span class="arrow">↙</span></button>
+  </div>
+  <div id="letter" class="panel" style="display:none">
+   <div class="section-title"><span id="letterIcon">💌</span><h2 id="letterTitle">رسالة</h2></div>
+   <div id="letterText"></div>
+   <button class="action" onclick="document.getElementById('letter').style.display='none'">قفل الرسالة ✕</button>
+  </div>
+  <div class="footer">MADE WITH STARS, BOOKS & A LITTLE BIT OF CHAOS</div>
+ </div>
+</main>
+
+<main id="wheelScreen" class="screen">
+ <div class="content">
+  <div class="topline"><span class="tag">🎡 THE CHALLENGE DEPARTMENT</span><button class="back" onclick="go('screen2')">← رجوع</button></div>
+  <div class="intro"><div class="eyebrow">LET THE UNIVERSE DECIDE</div><h2>عجلة الحظ 🎲</h2><p>لف العجلة وشوف التحدي اللي هيطلعلك. لو مش مناسب، دوس إعادة لف عادي!</p></div>
+  <div class="panel wheel-wrap">
+   <div><div class="pointer">▼</div><div class="wheel" id="wheel"><span class="wheel-label">✨</span></div></div>
+   <div class="wheel-side"><h2>Ready, Prisco?</h2><p>مفيش ضغط ولا تحدي لازم يتعمل؛ اختار اللي يناسبك وخليها لعبة لطيفة.</p><button class="action" id="spinBtn" onclick="spin()">لف العجلة!</button><div class="result" id="challengeResult">التحدي هيظهر هنا… 👀</div><button class="back" onclick="spin()">إعادة اللف ↻</button></div>
+  </div>
+ </div>
+</main>
+
+<main id="chessScreen" class="screen">
+ <div class="content">
+  <div class="topline"><span class="tag">♟️ CHESS PUZZLE / LEVEL 01</span><button class="back" onclick="go('screen2')">← رجوع</button></div>
+  <div class="intro"><div class="eyebrow">ONE MOVE LEFT</div><h2>تقدر تعمل كش مات؟</h2><p>الأبيض عليه الدور. حرّك الملكة للمربع الصح عشان تنهي اللعبة في نقلة واحدة.</p></div>
+  <div class="panel chess-layout">
+   <div><div class="chess-board" id="board" aria-label="Chess puzzle board"></div><div class="notice" style="text-align:center">اضغط على الملكة البيضاء، وبعدها اختار المربع اللي هتنقلها ليه.</div></div>
+   <div><h2>Think carefully.</h2><p>مش محتاج تحرك قطع كتير. ركّز في المربعات اللي الملك الأسود يقدر يهرب ليها، وشوف إزاي تحاصره.</p><div class="result" id="chessStatus">الأبيض يبدأ ♙</div><button class="back" onclick="resetChess()">إعادة اللغز ↻</button> <button class="action" onclick="chessHint()">Spider sense 🕸️</button><p class="notice">تلميح: النقلة الصح بتحط الملكة جنب الملك الأسود، والملك الأبيض بيحميها.</p></div>
+  </div>
+ </div>
+</main>
+
+
+<main id="secretLab" class="screen">
+ <div class="content">
+  <div class="topline"><span class="tag">🌌 THE GALAXY SECRET LAB</span><button class="back" onclick="go('screen2')">← رجوع</button></div>
+  <div class="intro"><div class="eyebrow">SEVEN MISSIONS / ZERO BORING MOMENTS</div><h2>مختبر الأسرار</h2><p>كل ركن هنا فيه حاجة مخفية. جرّبهم بالترتيب أو اكتشفهم بطريقتك.</p></div>
+  <div class="secret-grid">
+   <section class="secret-card"><h3>🕵️ 01 — رسالة مورس</h3><p>فك الشفرة واكتب الكلمة بالإنجليزي. تلميح: اسم صاحب الموقع!</p><div class="notice en">.--. .-. .. ... -.-. ---</div><input id="morseInput" placeholder="Type the secret word..." autocomplete="off"><button class="action" onclick="checkMorse()">Decode</button><div class="secret-output" id="morseOutput">Waiting for your answer…</div></section>
+   <section class="secret-card"><h3>🕸️ 02 — فخ العنكبوت</h3><p>اضغط الخيوط بالترتيب الصحيح: 2 ثم 1 ثم 3.</p><div class="web-threads"><button class="thread-btn" onclick="webThread(1)">🕸️ 1</button><button class="thread-btn" onclick="webThread(2)">🕸️ 2</button><button class="thread-btn" onclick="webThread(3)">🕸️ 3</button></div><div class="secret-output" id="webOutput">Sequence: — — —</div></section>
+   <section class="secret-card"><h3>📖 03 — كتاب الذكريات</h3><p>اقلب الصفحات. مفيش صور مطلوبة؛ الكتاب كله كلام ونجوم.</p><div class="book-page" id="bookPage">فيه ناس بتدخل حياتنا وتسيبها ألطف من غير ما تاخد بالها. 💙</div><div style="display:flex;justify-content:space-between;margin-top:12px"><button class="back" onclick="turnPage(-1)">← السابقة</button><span class="notice" id="pageCount">1 / 4</span><button class="back" onclick="turnPage(1)">التالية →</button></div></section>
+   <section class="secret-card"><h3>👑 04 — Hall of Fame</h3><p>قاعة المشاهير الرسمية، من غير صورة شخصية. الأفاتار الرمزي كفاية جدًا.</p><div style="font-size:55px;text-align:center">🕷️♟️</div><h2 style="text-align:center;color:#f2a0ba">PRISCO</h2><p style="text-align:center">THE ULTIMATE CHALLENGE WINNER<br><span class="en">CLASS: LEGENDARY FRIEND</span></p><button class="action" onclick="award('hall','Hall of Fame Legend')">استلم لقبك 👑</button></section>
+   <section class="secret-card"><h3>🎁 05 — الصندوق الغامض</h3><p>اضغط على الصندوق ثلاث مرات عشان تعرف إيه جواه.</p><button id="mysteryBox" onclick="tapBox()" style="display:block;margin:10px auto;border:0;background:none;font-size:76px">🎁</button><div class="secret-output" id="boxOutput">Locked. 0 / 3</div></section>
+   <section class="secret-card"><h3>🪐 06 — مستكشف المجرة</h3><p>كل كوكب مخبّي رسالة صغيرة. افتحهم كلهم.</p><div class="planet-row"><button class="planet" onclick="planetMessage(0)">🌍</button><button class="planet" onclick="planetMessage(1)">🪐</button><button class="planet" onclick="planetMessage(2)">🌙</button><button class="planet" onclick="planetMessage(3)">☄️</button></div><div class="secret-output" id="planetOutput">اختار كوكبًا لاستكشافه…</div></section>
+   <section class="secret-card"><h3>⭐ 07 — Final Boss: اجمع النجوم</h3><p>اضغط على الخمس نجوم اللي مستخبية في المجرة.</p><div class="star-hunt" id="starHunt"><button class="hunt-star" style="top:12%;left:15%" onclick="collectStar(this)">⭐</button><button class="hunt-star" style="top:60%;left:75%" onclick="collectStar(this)">⭐</button><button class="hunt-star" style="top:30%;left:48%" onclick="collectStar(this)">⭐</button><button class="hunt-star" style="top:75%;left:28%" onclick="collectStar(this)">⭐</button><button class="hunt-star" style="top:15%;left:82%" onclick="collectStar(this)">⭐</button></div><div class="secret-output" id="starOutput">Stars collected: 0 / 5</div></section>
+  </div>
+  <div class="panel" style="text-align:center"><div class="eyebrow">FINAL TITLE</div><h2 id="galaxyTitle">PRISCO — ROOKIE EXPLORER</h2><p id="galaxySubtitle">اجمع الإنجازات السبعة عشان تفتح الرتبة الأسطورية.</p></div>
+ </div>
+</main>
+
+<div class="final-screen" id="secretFinal">
+ <div class="panel" style="max-width:560px">
+  <div style="font-size:54px">🗝️📁</div>
+  <div class="eyebrow">UNLOCKED: SECRET FILE 001</div>
+  <h2>معلومة سرية عن Prisco</h2>
+  <p>تم التأكيد رسميًا إن صاحب الملف ده شخص يستحق التقدير… حتى لو ساعات بيكون مستفز شوية. 😌</p>
+  <p class="english">CLASSIFIED CONCLUSION: A pretty great friend. Do not let this information get to his head.</p>
+  <button class="action" onclick="document.getElementById('secretFinal').classList.remove('show')">إغلاق الملف ✕</button>
+ </div>
+</div>
+<div class="final-screen" id="mouseFinal">
+ <div><div class="mouse-jump">🐭</div><h2>CAUGHT YOU! 🐭</h2><p>الفار وصل قبلك… بس إنت كسبت اللعبة! 🎉</p><button class="action" onclick="closeFinal()">كمّل استكشاف الموقع</button></div>
+</div>
+
+<script>
+let soundOn=false, audioCtx=null, toastTimer=null;
+
+let achievements=new Set(),webSequence=[],boxTaps=0,currentPage=0,starsCollected=0;
+const memoryPages=[
+'فيه ناس بتدخل حياتنا وتسيبها ألطف من غير ما تاخد بالها. 💙',
+'شكرًا على الضحك والكلام العشوائي، وعلى إنك بتفهم الأفكار حتى لو شرحي بياخد لفة طويلة.',
+'أتمنى تفضل متحمس لحاجاتك، وتحقق اللي نفسك فيه، وتفضل فخور بنفسك وبكل خطوة بتاخدها.',
+'Friendship achievement unlocked: you made a difference. Keep being awesome, Prisco. ✨'
+];
+const planetNotes=[
+'الأرض: مكان صغير، لكن فيه ناس وجودها بيخلّي الأيام أحلى. 🌍',
+'زحل: حتى الكواكب عندها حلقات… وإنت عندك سجل إنجازات بيتوسع. 🪐',
+'القمر: شكرًا على كل مرة خلتني أضحك فيها من قلبي. 🌙',
+'المذنب: خليك دايمًا سريع في تحقيق أحلامك، مش في الهروب من التحديات! ☄️'
+];
+function award(id,label){if(achievements.has(id))return;achievements.add(id);const c=document.getElementById('badgeCount');if(c)c.textContent=achievements.size+' / 7';notify('Achievement unlocked: '+label+' 🏅');playTone(760,.13);if(achievements.size===7){document.getElementById('galaxyTitle').textContent='PRISCO — MASTER OF THE GALAXY';document.getElementById('galaxySubtitle').textContent='كل الأسرار اتكشفت. اللقب الأسطوري بقى بتاعك! 👑🌌';notify('LEGENDARY STATUS UNLOCKED! 👑');}}
+function checkMorse(){const v=document.getElementById('morseInput').value.trim().toUpperCase(),o=document.getElementById('morseOutput');if(v==='PRISCO'){o.textContent='Decoded: PRISCO. Welcome, legend!';award('morse','Code Breaker');}else o.textContent='Not quite. Hint: it is the name on the secret file.';}
+function webThread(n){webSequence.push(n);if(webSequence.length>3)webSequence=[];document.getElementById('webOutput').textContent='Sequence: '+webSequence.join(' — ');if(webSequence.join(',')==='2,1,3'){document.getElementById('webOutput').textContent='Trap escaped! Spider approved. 🕷️';award('web','Web Escape Artist');webSequence=[];}else if(webSequence.length===3){document.getElementById('webOutput').textContent='Wrong order! Start again: 2, 1, 3.';webSequence=[];}}
+function turnPage(d){currentPage=(currentPage+d+memoryPages.length)%memoryPages.length;document.getElementById('bookPage').textContent=memoryPages[currentPage];document.getElementById('pageCount').textContent=(currentPage+1)+' / '+memoryPages.length;if(currentPage===memoryPages.length-1)award('book','Bookworm');}
+function tapBox(){boxTaps++;const b=document.getElementById('mysteryBox'),o=document.getElementById('boxOutput');if(boxTaps<3){b.textContent='🎁✨';o.textContent='Almost… '+boxTaps+' / 3';playTone(430+boxTaps*100,.1);}else{b.textContent='🎉';o.textContent='SURPRISE! You are one of a kind, Prisco. 💙';award('box','Mystery Solver');}}
+function planetMessage(i){document.getElementById('planetOutput').textContent=planetNotes[i];if(!window.planetsFound)window.planetsFound=new Set();window.planetsFound.add(i);if(window.planetsFound.size===4)award('planets','Galaxy Traveler');}
+function collectStar(b){if(b.disabled)return;b.disabled=true;b.style.opacity='0';b.style.transform='scale(0)';starsCollected++;document.getElementById('starOutput').textContent='Stars collected: '+starsCollected+' / 5';playTone(650+starsCollected*60,.1);if(starsCollected===5)award('stars','Star Collector');}
+
+function notify(message){const t=document.getElementById('toast');t.textContent=message;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2600);}
+function toggleSound(){soundOn=!soundOn;document.getElementById('soundToggle').textContent=soundOn?'🔊 الصوت':'🔇 الصوت';if(soundOn){playTone(660,.09);notify('الصوت اتفعل! 🔊');}else notify('الصوت اتقفل.');}
+function playTone(freq=520,duration=.12){if(!soundOn)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.frequency.value=freq;osc.type='sine';gain.gain.setValueAtTime(.045,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+duration);osc.connect(gain);gain.connect(audioCtx.destination);osc.start();osc.stop(audioCtx.currentTime+duration);}catch(e){}}
+function secretFile(){document.getElementById('secretFinal').classList.add('show');playTone(740,.18);}
+document.querySelectorAll('.spider').forEach((spider,i)=>spider.addEventListener('click',()=>{notify(['Spider-sense says: you are being watched. 🕷️','This spider has officially joined Team Prisco.','You found a tiny guardian of the galaxy.'][i]);playTone(430+i*100,.1);}));
+const letters={
+ win:{icon:'🏆',title:'رسالة الفوز | The winner’s note',html:`
+ <p>برافووووو إنك كسبت! 🎉🏆<br>أنا كنت متأكدة كده كده إنك هتكسب، من قبل ما التحدي يبدأ أصلًا. كان عندي ثقة غريبة في الموضوع، وكأن النتيجة كانت معروفة ومكتوبة من البداية.</p>
+ <p>أتمنى لك الفوز دايمًا، مش في التحديات وبس، لكن في كل حاجة بتحاول تعملها. أتمنى تفضل عندك نفس الحماس، ونفس الإصرار، وإن كل تعبك ومحاولاتك يجيبوا نتيجة تفرحك وتكون فخور بيها.</p>
+ <p>وبالمناسبة، أنا مش دايمًا بسمح لأي حد يفوز عليّا… بس واضح إنك تستحق الاستثناء ده. اعتبرها جائزة نادرة جدًا، مش بتتوزع كل يوم. استمتع بيها بقى قبل ما أغيّر رأيي. :')</p>
+ <p class="english">CONGRATULATIONS, Prisco! I knew you could do it. I hope you keep winning, growing, and surprising yourself. You earned this one. Enjoy your victory, champion. 🏆</p>
+ <p>مبروك مرة تانية يا بطل، وعقبال انتصارات أكتر وأكبر. ✨</p>`},
+ thanks:{icon:'💙',title:'رسالة شكر | A little thank-you',html:`
+ <p>شكرًا ليك… للمرة العاشرة تقريبًا بقولها، بس حقيقي مش كفاية. في حاجات كتير ممكن الواحد يتعود عليها وينسى يشكر وجودها، وأنا مش عايزة أتعامل مع وجودك كأنه حاجة عادية أو مضمونة.</p>
+ <p>شكرًا لأنك بتشدني لما أكون كسلانة أو مش عايزة أذاكر. ساعات كلمة منك أو مجرد إننا نتكلم بيخليني أرجع أتحرك وأفتكر أنا كنت عايزة أعمل إيه. يمكن إنت مش واخد بالك من تأثير الحاجات الصغيرة دي، بس هي بتفرق فعلًا.</p>
+ <p>وشكرًا كمان على الضحك. أنا بضحك جدًا لما بتكلم معاك، وبحس إني أقدر أكون طبيعية من غير ما أفضل أفكر في كل كلمة بقولها أو أحاول أتصرف بطريقة معينة. ودي حاجة مريحة ونادرة، فمتستهونش بيها.</p>
+ <p>وشكرًا إنك ذكي، وإنك بتحاول تفهمني فعلًا، حتى لما أفكاري تبقى متشعبة أو شرحي يطلع في اتجاهات غريبة. بحب إن الكلام معاك ممكن يبدأ من موضوع وينتهي عند سؤال علمي أو فكرة ملهاش أي علاقة بالبداية، وإنك غالبًا بتلحق تفهم أنا بحاول أوصل لإيه.</p>
+ <p>يمكن من غير ما تقصد، ساعدتني أبقى أحسن في حاجات كتير: أتحمس، أحاول، أضحك أكتر، وأبص لبعض الأمور بطريقة مختلفة. مش معنى كده إنك مسؤول عن تغييري أو إن لازم تعمل حاجة مخصوص؛ وجودك وطريقتك كفاية إنهم يسيبوا أثر حلو.</p>
+ <p>أتمنى أكون أنا كمان صديقة كويسة ليك، وأكون بضيف لحياتك ولو جزء صغير من الطاقة الحلوة اللي بتضيفها لحياتي. وأتمنى تفضل تحقق الحاجات اللي نفسك فيها، وتفضل الشخص الذكي والمجتهد واللطيف اللي أنا محظوظة إني عرفته.</p>
+ <p class="english">Thank you for being such a wonderful friend. Thank you for the laughs, the motivation, the random conversations, and for understanding me even when my brain takes the longest route possible to explain a simple thought.</p>
+ <p class="english">You have made a positive difference in my life, probably more than you realize. I genuinely appreciate you, and I hope life gives you plenty of reasons to be proud of yourself. Keep being you. 💙</p>
+ <p>وبس… دي مش نهاية الكلام، دي مجرد محاولة إني أقول جزء من اللي أنا ممتنة له. شكرًا يا Prisco. بجد. 💙</p>`}
+};
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function openLetter(type){const x=letters[type];document.getElementById('letterIcon').textContent=x.icon;document.getElementById('letterTitle').textContent=x.title;document.getElementById('letterText').innerHTML=x.html;document.getElementById('letter').style.display='block';document.getElementById('letter').scrollIntoView({behavior:'smooth',block:'center'});}
+const challenges=['اعمل 10 ضغطات بالراحة، أو اختار تمرين تمدد خفيف 🏃','قف على رجل واحدة لمدة 20 ثانية جنب مكان ثابت للتوازن ⚖️','اعمل ساندويتش أو أكلة بسيطة بتحبها 🥪','هات لأختك حاجة حلوة أو اعمل لها مفاجأة لطيفة 🍫','قول لمامتك كلمة حلوة أو اشكرها على حاجة ❤️','احكيلي معلومة غريبة محدش يتوقعها 🧠','اختارلي تحدي لطيف أعمله أنا كمان 😈','اطلب مني طلب صغير وأنا هحاول أنفذه 🎁'];
+let spinning=false;
+function spin(){if(spinning)return;playTone(360,.12);spinning=true;const wheel=document.getElementById('wheel');const btn=document.getElementById('spinBtn');btn.disabled=true;document.getElementById('challengeResult').textContent='العجلة بتفكر…';const index=Math.floor(Math.random()*challenges.length);const deg=360*5+(360-index*45-22.5);wheel.style.transform=`rotate(${deg}deg)`;setTimeout(()=>{document.getElementById('challengeResult').textContent='تحديك هو: '+challenges[index];btn.disabled=false;spinning=false;},3100);}
+const initialPieces=[
+ {sq:'f6',piece:'♔',color:'w'},{sq:'g6',piece:'♕',color:'w'},{sq:'h8',piece:'♚',color:'b'}
+];
+let queenAt='g6',selected=false;
+function coords(sq){return {f:sq.charCodeAt(0)-97,r:parseInt(sq[1])};}
+function renderBoard(){const board=document.getElementById('board');board.innerHTML='';for(let r=8;r>=1;r--){for(let f=0;f<8;f++){const file=String.fromCharCode(97+f),sq=file+r,btn=document.createElement('button');btn.className='square '+(((f+(r-1))%2===0)?'light':'dark');btn.setAttribute('aria-label',sq);let piece='';if(sq==='f6')piece='♔';if(sq===queenAt)piece='♕';if(sq==='h8')piece='♚';btn.textContent=piece;if(selected&&sq==='g7')btn.classList.add('hint');if(piece==='♕'&&selected)btn.classList.add('selected');btn.onclick=()=>clickSquare(sq);board.appendChild(btn);}}}
+function chessHint(){notify('جرّب تنقل الملكة من g6 إلى g7. 👀');document.querySelectorAll('.square').forEach(s=>{if(s.getAttribute('aria-label')==='g7')s.classList.add('hint');});playTone(590,.12);}
+function clickSquare(sq){const status=document.getElementById('chessStatus');if(!selected){if(sq===queenAt){selected=true;renderBoard();status.textContent='الملكة اتحددت. اختار g7.';}else status.textContent='اختار الملكة البيضاء الأول.';return;}if(sq==='g7'){queenAt='g7';selected=false;renderBoard();status.textContent='CHECKMATE! كش مات! 👑';notify('Achievement unlocked: Chess Master ♟️');playTone(880,.16);setTimeout(()=>document.getElementById('mouseFinal').classList.add('show'),900);}else if(sq===queenAt){selected=false;renderBoard();status.textContent='تم إلغاء الاختيار.';}else{status.textContent='مش دي النقلة. جرّب تاني!';}}
+function resetChess(){queenAt='g6';selected=false;renderBoard();document.getElementById('chessStatus').textContent='الأبيض يبدأ ♙';}
+function closeFinal(){document.getElementById('mouseFinal').classList.remove('show');go('screen2');}
+renderBoard();
+</script>
+</body>
+</html>
